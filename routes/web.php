@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\TodoController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,12 +23,12 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::prefix('/todo')->as('todo.')->group(function() {
-    Route::get('', [TodoController::class, 'index'])->name('index');
-    Route::get('/create', [TodoController::class, 'create'])->name('create');
-    Route::post('/store', [TodoController::class, 'store'])->name('store');
-    Route::get('/{id}', [TodoController::class, 'show'])->name('show');
-    Route::get('/{id}/edit', [TodoController::class, 'edit'])->name('edit');
-    Route::put('/update', [TodoController::class, 'update'])->name('update');
-    Route::delete('/delete', [TodoController::class, 'delete'])->name('delete');
+Route::prefix('/todo')->as('todo.')->controller(TodoController::class)->group(function() {
+    Route::get('', 'index')->name('index');
+    Route::get('/create', 'create')->name('create');
+    Route::post('/store', 'store')->name('store');
+    Route::get('/{id}', 'show')->name('show');
+    Route::get('/{id}/edit', 'edit')->name('edit');
+    Route::put('/update', 'update')->name('update');
+    Route::delete('/delete', 'delete')->name('delete');
 });
